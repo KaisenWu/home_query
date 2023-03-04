@@ -33,6 +33,12 @@ function MainNavigation() {
               <Link href="/properties">Properties</Link>
             </li>
           )}
+           {/* Only in case of we are holding a session, the profile link will appear. */}
+           {session && (
+            <li>
+              <Link href="/dashboard">Dashboard</Link>
+            </li>
+          )}
           {/* Only in case of we are holding a session, the profile link will appear. */}
           {session && (
             <li>

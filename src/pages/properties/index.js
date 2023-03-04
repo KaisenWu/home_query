@@ -1,11 +1,19 @@
 import { useState, useEffect } from "react";
-import PropertyList from "../../components/properties/property-list";
+import { useRouter } from "next/router";
+import PropertyList from "../../../components/properties/property-list";
+import PropertySearch from "../../../components/properties/property-search";
 
 import { getSession } from "next-auth/client";
 
 function Properties() {
+  const router = useRouter();
   const [randomProperties, setRandomProperties] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  function searchPropertyHandler(year, month, city) {
+    const fullPath = `/properties/${year}/${month}/${city}`;
+    router.push(fullPath);
+  }
 
   useEffect(() => {
     fetch("/api/property/random-properties")
@@ -19,7 +27,7 @@ function Properties() {
   if (isLoading) {
     return (
       <div>
-        <h1>Check some random property transactions.</h1>
+        <h1><center>Query property transactions you are intrested.</center></h1>
         <p>Loading ...</p>
       </div>
     );
@@ -27,7 +35,8 @@ function Properties() {
 
   return (
     <div>
-      <h1>Check some random property transactions.</h1>
+      <h1><center>Query property transactions you are intrested.</center></h1>
+      <PropertySearch onSearch={searchPropertyHandler}/>
       <PropertyList properties={randomProperties} />
     </div>
   );

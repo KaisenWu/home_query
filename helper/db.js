@@ -27,3 +27,20 @@ export async function getRandomProperties(client, collection) {
 
   return randomeMongoProperties;
 }
+
+export async function getFilteredProperties(client, collection, city) {
+    // Declare the database instance.
+    const db = client.db();
+    // Get all the comments from the collection, convert it to array.
+    const filteredProperties = await db.collection(collection).aggregate([
+      {
+        $match: {
+          // year: year,
+          // month: month,
+          City: city
+        }
+      }
+    ]).toArray();
+  
+    return filteredProperties;
+}

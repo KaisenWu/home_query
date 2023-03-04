@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import ErrorAlert from "../../../components/ui/error-alert";
 import Button from "../../../components/ui/button";
 import PropertyList from "../../../components/properties/property-list";
+import { getSession } from "next-auth/client";
 
 function FilteredPropertiesPage() {
   const [filteredProperties, setFilteredProperties] = useState([]);
@@ -15,20 +16,19 @@ function FilteredPropertiesPage() {
     year: filter[0],
     month: filter[1],
     city: filter[2],
-  }
-  
+  };
 
   useEffect(() => {
     fetch("/api/property/filtered-properties", {
-        method: 'POST',
-        body: JSON.stringify(filterData),
+      method: "POST",
+      body: JSON.stringify(filterData),
     })
       .then((response) => response.json())
       .then((data) => {
         setFilteredProperties(data);
         setIsLoading(false);
       });
-  },[filter])
+  }, [filter]);
 
   let pageHeadData = (
     <Head>
@@ -46,33 +46,46 @@ function FilteredPropertiesPage() {
     );
   }
 
-//   if (!filteredProperties) {
-//     return (
-//       <Fragment>
-//         {pageHeadData}
-//         <ErrorAlert>
-//           <p>No events found for the chosen filter!</p>
-//         </ErrorAlert>
-//         <div className="center">
-//           <Button link="/propertiess">Show Random Properties</Button>
-//         </div>
-//       </Fragment>
-//     );
-//   }
-
-
+  //   if (!filteredProperties) {
+  //     return (
+  //       <Fragment>
+  //         {pageHeadData}
+  //         <ErrorAlert>
+  //           <p>No events found for the chosen filter!</p>
+  //         </ErrorAlert>
+  //         <div className="center">
+  //           <Button link="/propertiess">Show Random Properties</Button>
+  //         </div>
+  //       </Fragment>
+  //     );
+  //   }
 
   return (
     <Fragment>
       <PropertyList properties={filteredProperties} />
     </Fragment>
   );
-
-
-    
 }
 
-
-
+// Define the function to extract session infomation from the server side.
+// Extract session from the baclend avoid flashing the profile page in case of unauthenticated.
+export async function getServerSideProps(context) {
+  // getSession() function can run on either client side and server side.
+  const session = await getSession({ req: context.req });
+  // Define how to response in case of the session is empty.
+  if (!session) {
+    return {
+      // Define redirect to the authentication page.
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    // If the session is active, return the session to the profile page.
+    props: { session },
+  };
+}
 
 export default FilteredPropertiesPage;

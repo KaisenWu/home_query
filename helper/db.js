@@ -1,9 +1,8 @@
 import { MongoClient } from "mongodb";
 
 export async function connectToDatabase() {
-  const client = await MongoClient.connect(
-    "mongodb+srv://Kaisen:Kaisen@homequerycluster.arkxnhx.mongodb.net/home_query?retryWrites=true&w=majority"
-  );
+  const connectionString = `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_clustername}.arkxnhx.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority`;
+  const client = await MongoClient.connect(connectionString);
   return client;
 }
 
@@ -28,19 +27,28 @@ export async function getRandomProperties(client, collection) {
   return randomeMongoProperties;
 }
 
-export async function getFilteredProperties(client, collection, city, bedroom, bathroom) {
-    // Declare the database instance.
-    const db = client.db();
-    // Get all the comments from the collection, convert it to array.
-    const filteredProperties = await db.collection(collection).aggregate([
+export async function getFilteredProperties(
+  client,
+  collection,
+  city,
+  bedroom,
+  bathroom
+) {
+  // Declare the database instance.
+  const db = client.db();
+  // Get all the comments from the collection, convert it to array.
+  const filteredProperties = await db
+    .collection(collection)
+    .aggregate([
       {
         $match: {
           "Total Bedrooms": bedroom,
           "Total Bathrooms": bathroom,
-          City: city
-        }
-      }
-    ]).toArray();
-  
-    return filteredProperties;
+          City: city,
+        },
+      },
+    ])
+    .toArray();
+
+  return filteredProperties;
 }

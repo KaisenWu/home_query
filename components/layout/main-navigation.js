@@ -45,6 +45,11 @@ function MainNavigation() {
               <Link href="/profile">Profile</Link>
             </li>
           )}
+          {session && (
+            <li>
+              <Link href="/newsletter">Newsletter</Link>
+            </li>
+          )}
           {/* Show the Logout button only in case we have a session. */}
           {session && (
             <li>

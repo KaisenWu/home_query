@@ -13,8 +13,8 @@ function FilteredPropertiesPage() {
   const filter = router.query.slug;
 
   const filterData = {
-    year: filter[0],
-    month: filter[1],
+    bedroom: filter[0],
+    bathroom: filter[1],
     city: filter[2],
   };
 

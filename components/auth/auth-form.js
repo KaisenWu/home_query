@@ -63,7 +63,7 @@ function AuthForm() {
       if (!result.error) {
         // Define if signIn succeed, the user will be redirected to the profile page.
         // The reason why we use router.replace here is we don't want to loose the state.
-        router.replace('/home');
+        router.replace('/dashboard');
       }
       setLoginErrorMsg(result.error)
     } else {

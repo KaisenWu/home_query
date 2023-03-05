@@ -18,8 +18,11 @@ async function handler(req, res) {
       const filteredProperties = await getFilteredProperties(
         client,
         "transactions",
-        requestBodyJson.city
+        requestBodyJson.city,
+        requestBodyJson.bedroom,
+        requestBodyJson.bathroom
       );
+      console.log(filteredProperties);
       res.status(200).json(filteredProperties);
     } catch (error) {
       res.status(500).json({ message: "Getting filtered properties failed" });

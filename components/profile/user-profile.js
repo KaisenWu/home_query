@@ -24,7 +24,7 @@ function UserProfile() {
 
   return (
     <section className={classes.profile}>
-      <h1>Your User Profile</h1>
+      <h1>Change Your Password</h1>
       <p>{changePasswordMsg}</p>
       <ProfileForm onChangePassword={changePasswordHandler} />
     </section>

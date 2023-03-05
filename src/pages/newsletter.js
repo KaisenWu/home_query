@@ -5,7 +5,7 @@ import NewsletterRegistration from "../../components/input/newsletter-registrati
 import Notification from "../../components/ui/notification";
 import NotificationContext from "../../store/notification-context";
 
-function HomePage(props) {
+function NewsletterPage(props) {
   // useContext passed the notification context value to this component.
   const notificationCtx = useContext(NotificationContext);
   //   Store the notification data.
@@ -55,4 +55,4 @@ export async function getServerSideProps(context) {
 }
 
 
-export default HomePage;
+export default NewsletterPage;

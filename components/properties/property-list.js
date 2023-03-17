@@ -8,6 +8,7 @@ function PropertyList(props) {
       {properties.map((property) => (
         <PropertyItem
           key={property._id}
+          id={property._id.toString()}
           city={property.City}
           address={property.Address}
           price={property.Price}

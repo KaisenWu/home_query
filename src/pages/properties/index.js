@@ -20,6 +20,7 @@ function Properties() {
       .then((response) => response.json())
       .then((data) => {
         setRandomProperties(data);
+        // console.log(data);
         setIsLoading(false);
       });
   }, []);
@@ -36,7 +37,8 @@ function Properties() {
   return (
     <div>
       <h1><center>Query property transactions you are intrested.</center></h1>
-      <PropertySearch onSearch={searchPropertyHandler}/>
+      <PropertySearch onSearch={searchPropertyHandler}/> <br/>
+      <h1><center>Refresh the page to have more random properties transactions.</center></h1>
       <PropertyList properties={randomProperties} />
     </div>
   );

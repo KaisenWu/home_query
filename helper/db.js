@@ -1,7 +1,8 @@
 import { MongoClient } from "mongodb";
 
+
 export async function connectToDatabase() {
-  const connectionString = `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_clustername}.arkxnhx.mongodb.net/${process.env.mongodb_database}?retryWrites=true&w=majority`;
+  const connectionString = `mongodb+srv://Kaisen:Kaisen@homequerycluster.arkxnhx.mongodb.net/home_query?retryWrites=true&w=majority`;  
   const client = await MongoClient.connect(connectionString);
   return client;
 }
@@ -51,4 +52,23 @@ export async function getFilteredProperties(
     .toArray();
 
   return filteredProperties;
+}
+
+export async function getAllProperties(client, collection) {
+  // Declare the database instance.
+  const db = client.db();
+  // Operate with a specific collection in the database.
+  const properties = await db.collection(collection).find().toArray();
+  client.close();
+  return properties;
+}
+
+export async function getPropertyById(client, collection, id) {
+  // Declare the database instance.
+  const db = client.db();
+  // Get all the comments from the collection, convert it to array.
+ 
+  const selectedProperties = await db.collection(collection).findById({_id: id});
+  client.close();
+  return selectedProperties;
 }

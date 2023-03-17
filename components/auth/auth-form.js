@@ -20,9 +20,9 @@ async function createUser(email, password) {
   // Convert the response to Javascript object format and store it.
   const data = await response.json();
   // Check if the response id unnormal, what will return to user.
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
+  // if (!response.ok) {
+  //   throw new Error(data.message || "Something went wrong!");
+  // }
   // Return the response data.
   return data;
 }
@@ -35,6 +35,8 @@ function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
   // Define the login error message useState.
   const [loginErrorMsg, setLoginErrorMsg] = useState('');
+  // Define the sign up error message useState.
+  const [signupMsg, setSignupMsg] = useState('');
   // Create a router instance.
   const router = useRouter();
   // Define the function to toggle between login and registration mode.
@@ -63,18 +65,21 @@ function AuthForm() {
       if (!result.error) {
         // Define if signIn succeed, the user will be redirected to the profile page.
         // The reason why we use router.replace here is we don't want to loose the state.
-        router.replace('/dashboard');
+        router.replace('/properties');
       }
       setLoginErrorMsg(result.error)
     } else {
-      try {
+      // try {
         // Call the createUser function to post the user input to server. Then store the result.
         const result = await createUser(enteredEmail, enteredPassword);
         console.log(result);
-      } catch (error) {
+        setSignupMsg(result.message);
+      // } 
+      // catch (error) {
         // Log the error.
-        console.log(error);
-      }
+        // console.log(error);
+        // setSignupMsg(JSON.stringify(error))
+      // }
     }
   }
 
@@ -82,6 +87,7 @@ function AuthForm() {
     <section className={classes.auth}>
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <h1>{isLogin && loginErrorMsg}</h1>
+      <h1>{!isLogin && signupMsg}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="email">Your Email</label>

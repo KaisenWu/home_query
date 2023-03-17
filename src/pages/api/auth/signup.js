@@ -20,7 +20,7 @@ async function handler(req, res) {
   ) {
     // If the user input validation faild, define the response and terminate processing.
     res.status(422).json({
-      message: "Invalid input = password should be at least 3 characters.",
+      message: "Password should be at least 3 characters. Please reset the password",
     });
     return;
   }
@@ -32,7 +32,7 @@ async function handler(req, res) {
   const existingUser = await db.collection('users').findOne({email: email})
   // If the user exists already, response to client, close the connection and terminate excution.
   if(existingUser) {
-    res.status(422).json({message: 'User exists.'})
+    res.status(422).json({message: 'User exists, please use another email'})
     client.close();
     return;
   }
@@ -45,7 +45,7 @@ async function handler(req, res) {
     password: hashedPassword,
   });
   // Define how to response to client when insertion success.
-  res.status(201).json({ message: "Created user!" });
+  res.status(201).json({ message: "User created successfully!" });
   client.close();
 }
 

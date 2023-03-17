@@ -22,7 +22,6 @@ async function handler(req, res) {
         requestBodyJson.bedroom,
         requestBodyJson.bathroom
       );
-      console.log(filteredProperties);
       res.status(200).json(filteredProperties);
     } catch (error) {
       res.status(500).json({ message: "Getting filtered properties failed" });

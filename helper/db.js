@@ -63,12 +63,11 @@ export async function getAllProperties(client, collection) {
   return properties;
 }
 
-export async function getPropertyById(client, collection, id) {
+export async function getPropertyByMl(client, collection, ml) {
   // Declare the database instance.
   const db = client.db();
   // Get all the comments from the collection, convert it to array.
- 
-  const selectedProperties = await db.collection(collection).findById({_id: id});
+  const selectedProperties = await db.collection(collection).findOne({"ML #": ml});
   client.close();
   return selectedProperties;
 }

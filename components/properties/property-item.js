@@ -7,11 +7,11 @@ import ArrowRightIcon from "../icons/arrow-right-icon";
 import Button from "../ui/button";
 
 function PropertyItem(props) {
-  const { city, address, price, listDate, id } = props;
-  const exploreLink = `/properties/${id}`;
+  const { city, address, price, listDate, ml } = props;
+  const exploreLink = `/properties/${ml}`;
 
   return (
-    <li className={classes.item} key={id}>
+    <li className={classes.item}>
       <Image src="/house_sample.jpg" alt={address} width={250} height={160} />
       <div className={classes.content}>
         <div className={classes.summary}>

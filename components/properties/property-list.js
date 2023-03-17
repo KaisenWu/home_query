@@ -7,8 +7,8 @@ function PropertyList(props) {
     <ul className={classes.list}>
       {properties.map((property) => (
         <PropertyItem
-          key={property._id}
-          id={property._id.toString()}
+          key={property['ML #']}
+          ml={property['ML #']}
           city={property.City}
           address={property.Address}
           price={property.Price}
